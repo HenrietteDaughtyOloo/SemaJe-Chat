@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411852462427",
+    "project_id": "semajechatapplication",
+    "storage_bucket": "semajechatapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411852462427:android:6fc3cf256023527bc3a27e",
+        "android_client_info": {
+          "package_name": "com.henriette.semajechatapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV7cFEFs0ntQDUVpghC2CRTcSBAH7iPRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
