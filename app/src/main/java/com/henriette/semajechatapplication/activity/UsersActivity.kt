@@ -31,14 +31,16 @@ class UsersActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.userRecyclerView.layoutManager = LinearLayoutManager(this,
-            LinearLayout.VERTICAL, false)
+        binding.userRecyclerView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayout.VERTICAL, false
+        )
 
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
         binding.ivProfile.setOnClickListener {
-            var intent = Intent(this, HomeActivity::class.java)
+            var intent = Intent(this, ChangeProfileActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -52,45 +54,42 @@ class UsersActivity : AppCompatActivity() {
 //        userList.add(User("Jefferson", "https://homepage.cae.wise.edu/mece533/images/cat.png"))
 
 
-
-
-
-
     }
 
-    fun getUsersList(){
+    fun getUsersList() {
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-        var  databaseReference:DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        var databaseReference: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("Users")
 
-        databaseReference.addValueEventListener(object :ValueEventListener{
+        databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 val currentUser = snapshot.getValue(User::class.java)
 
 
-                if (currentUser!!.userImage == ""){
+                if (currentUser!!.profileImage == "") {
                     binding.ivProfile.setImageResource(R.drawable.semajebackground2)
-                }
-                else{
-                    Glide.with(this@UsersActivity).load(currentUser.userImage).into(binding.ivProfile)
+                } else {
+                    Glide.with(this@UsersActivity).load(currentUser.profileImage)
+                        .into(binding.ivProfile)
 
                 }
 
-                for (dataSnapshot:DataSnapshot in snapshot.children){
+                for (dataSnapshot: DataSnapshot in snapshot.children) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-                    if (!user!!.userId.equals(firebase.uid)){
+                    if (!user!!.userId.equals(firebase.uid)) {
                         userList.add(user)
 
                     }
                 }
-                val userAdapter = UserAdapter(this@UsersActivity,userList)
-                binding.userRecyclerView.adapter =userAdapter
+                val userAdapter = UserAdapter(this@UsersActivity, userList)
+                binding.userRecyclerView.adapter = userAdapter
 
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, error.message , Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
 
             }
 

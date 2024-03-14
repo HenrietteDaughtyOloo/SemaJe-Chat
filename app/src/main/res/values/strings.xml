@@ -24,4 +24,6 @@
     <string name="signin">Sign In</string>
     <string name="message">Message</string>
     <string name="profile">Profile</string>
+    <string name="save">Save</string>
+    <string name="enter_message">Enter message</string>
 </resources>

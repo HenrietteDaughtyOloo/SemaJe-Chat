@@ -14,7 +14,7 @@ import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     //setting up the viewbinding for this activity
-    private lateinit var binding:ActivitySignUpBinding
+    private lateinit var binding: ActivitySignUpBinding
 
     //setting up the action bar for the activity
 //    private lateinit var actionBar: ActionBar
@@ -22,7 +22,7 @@ class SignUpActivity : AppCompatActivity() {
     //set up of a progress bar
 //    private lateinit var progressDialog: ProgressDialog
 //
-    private lateinit var auth:FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 //    private lateinit var email: String
 //    private lateinit var password: String
 
@@ -53,24 +53,31 @@ class SignUpActivity : AppCompatActivity() {
         //Handling all clicks for the signup
         binding.btnSignUp.setOnClickListener {
 //            validateSignUpData()
-            val userName=binding.etEnterName.text.toString()
+            val userName = binding.etEnterName.text.toString()
             val email = binding.etEnterEmail.text.toString()
             val password = binding.etEnterPassword.text.toString()
             val confirmPassword = binding.etConfirmPassword.text.toString()
-            
-            if (TextUtils.isEmpty(userName)){
-                Toast.makeText( applicationContext,"The username is required", Toast.LENGTH_SHORT).show()
+
+            if (TextUtils.isEmpty(userName)) {
+                Toast.makeText(applicationContext, "The username is required", Toast.LENGTH_SHORT)
+                    .show()
             }
-            if (TextUtils.isEmpty(email)){
-                Toast.makeText( applicationContext,"The email is required", Toast.LENGTH_SHORT).show()
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(applicationContext, "The email is required", Toast.LENGTH_SHORT)
+                    .show()
             }
-            if (TextUtils.isEmpty(password)){
-                Toast.makeText( applicationContext,"The password is required", Toast.LENGTH_SHORT).show()
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(applicationContext, "The password is required", Toast.LENGTH_SHORT)
+                    .show()
             }
-            if (TextUtils.isEmpty(confirmPassword)){
-                Toast.makeText( applicationContext,"The confirm password is required", Toast.LENGTH_SHORT).show()
+            if (TextUtils.isEmpty(confirmPassword)) {
+                Toast.makeText(
+                    applicationContext,
+                    "The confirm password is required",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            if(password != confirmPassword){
+            if (password != confirmPassword) {
                 Toast.makeText(applicationContext, "Password does not match", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -84,7 +91,6 @@ class SignUpActivity : AppCompatActivity() {
             registerUser(userName, email, password)
 
         }
-
 
 
 //        binding.btnSignUp.setOnClickListener {
@@ -106,7 +112,7 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-//    private fun validateSignUpData() {
+    //    private fun validateSignUpData() {
 //        email = binding.etEnterEmail.text.toString().trim()
 //        password = binding.etEnterPassword.text.toString().trim()
 //
@@ -159,9 +165,9 @@ class SignUpActivity : AppCompatActivity() {
 //        return super.onSupportNavigateUp()
 //    }
 
-    private fun registerUser( userName:String, email: String, password:String){
-        auth.createUserWithEmailAndPassword(email,password,)
-            .addOnCompleteListener(this){
+    private fun registerUser(userName: String, email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) {
 
                 //validation of data
 //                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -180,19 +186,20 @@ class SignUpActivity : AppCompatActivity() {
 //                }
 
 
-                if (it.isSuccessful){
+                if (it.isSuccessful) {
                     var user: FirebaseUser? = auth.currentUser
-                    var userId:String = user!!.uid
+                    var userId: String = user!!.uid
 
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId)
+                    databaseReference =
+                        FirebaseDatabase.getInstance().getReference("Users").child(userId)
 
-                    var hashMap:HashMap<String,String> = HashMap()
-                    hashMap.put("userId",userId)
+                    var hashMap: HashMap<String, String> = HashMap()
+                    hashMap.put("userId", userId)
                     hashMap.put("userName", userName)
                     hashMap.put("profileImage", "")
 
-                    databaseReference.setValue(hashMap).addOnCompleteListener(this){
-                        if (it.isSuccessful){
+                    databaseReference.setValue(hashMap).addOnCompleteListener(this) {
+                        if (it.isSuccessful) {
                             binding.etEnterName.setText("")
                             binding.etEnterEmail.setText("")
                             binding.etEnterPassword.setText("")
